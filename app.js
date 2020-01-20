@@ -21,6 +21,7 @@ mongoose
 app.use(bodyParser.json())
 app.use(cors())
 app.use(compression())
+app.use(express.static('build'))
 app.use(middleware.requestLogger)
 app.use('/api/workouts', workoutsRouter)
 app.use(middleware.unknownEndpoint)
