@@ -14,6 +14,18 @@ mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useFindAndModify: false,
+		server: {
+			socketOptions: {
+				keepAlive: 300000,
+				connectTimeoutMS: 30000,
+			},
+		},
+		replset: {
+			socketOptions: {
+				keepAlive: 300000,
+				connectTimeoutMS: 30000,
+			},
+		},
 	})
 	.then(() => logger.info('Connected to MongoDB'))
 	.catch(error => logger.error('Error connecting to MongoDB:', error.message))
