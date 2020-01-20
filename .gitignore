@@ -1,0 +1,6 @@
+node_modules
+test.rest
+.vscode
+jest.config.js
+.env
+Procfile
