@@ -19,12 +19,7 @@ mongoose
 	.catch(error => logger.error('Error connecting to MongoDB:', error.message))
 
 app.use(bodyParser.json())
-app.use(
-	cors({
-		origin: 'http://localhost:3000',
-		optionsSuccessStatus: 200,
-	})
-)
+app.use(cors())
 app.use(compression())
 app.use(middleware.requestLogger)
 app.use('/api/workouts', workoutsRouter)
