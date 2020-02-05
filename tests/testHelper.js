@@ -5,11 +5,13 @@ const initialDBData = [
 		exercise: 'Jogging',
 		date: '2020-01-10T08:00:00.000Z',
 		trackedMetric: 20,
+		metricType: 'minutes',
 	},
 	{
 		exercise: 'Spin',
 		date: new Date().toISOString(),
 		trackedMetric: 45,
+		metricType: 'miles',
 	},
 ]
 
@@ -18,6 +20,7 @@ const nonExistingId = async () => {
 		exercise: 'test',
 		date: new Date().toISOString(),
 		trackedMetric: 1,
+		metricType: 'pounds',
 	})
 	await placeholderObject.save()
 	await placeholderObject.remove()
@@ -30,8 +33,14 @@ const getDataInDB = async () => {
 	return allDBData.map(w => w.toJSON())
 }
 
+const getUserDataInDB = async () => {
+	const initialUserData = await User.find({})
+	return initialUserData.map(u => u.toJSON())
+}
+
 module.exports = {
 	initialDBData,
 	nonExistingId,
 	getDataInDB,
+	getUserDataInDB,
 }

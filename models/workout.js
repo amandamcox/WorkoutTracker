@@ -6,12 +6,20 @@ const workoutSchema = new mongoose.Schema({
 		required: true,
 	},
 	date: {
-		type: Date,
+		type: String,
 		required: true,
 	},
 	trackedMetric: {
 		type: String,
 		required: true,
+	},
+	metricType: {
+		type: String,
+		required: true,
+	},
+	userId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
 	},
 })
 

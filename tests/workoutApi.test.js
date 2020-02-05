@@ -33,6 +33,7 @@ describe('Loading data', () => {
 		const res = await api.get(`/api/workouts/${workout._id}`)
 		expect(res.body.exercise).toBe(workout.exercise)
 		expect(res.body.trackedMetric).toBe(workout.trackedMetric)
+		expect(res.body.metricType).toBe(workout.metricType)
 	})
 
 	test('Getting invalid id throws error', async () => {
@@ -47,6 +48,7 @@ describe('Saving new data', () => {
 			exercise: 'Elliptical',
 			date: '2020-01-10T08:00:00.000Z',
 			trackedMetric: 35,
+			metricType: 'minutes',
 		}
 		await api
 			.post('/api/workouts')
@@ -82,6 +84,7 @@ describe('Editing and Deleting data', () => {
 			exercise: 'Gardening',
 			date: new Date().toISOString(),
 			trackedMetric: 15,
+			metricType: 'minutes',
 		})
 
 		const newData = await testWorkout.save()
@@ -113,6 +116,7 @@ describe('Editing and Deleting data', () => {
 		expect(newData[0].exercise).toBe(testWorkout.exercise)
 		expect(newData[0].date).toStrictEqual(firstWorkout.date)
 		expect(newData[0].trackedMetric).toBe(firstWorkout.trackedMetric)
+		expect(newData[0].metricType).toBe(firstWorkout.metricType)
 	})
 })
 
