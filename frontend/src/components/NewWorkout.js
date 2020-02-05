@@ -2,37 +2,35 @@ import React, { useState } from 'react'
 import exercises from '../statics/exerciseDataSet'
 
 const NewWorkout = ({ onSave }) => {
+	const dateHelper = () => {
+		const today = new Date()
+		let day = today.getDate()
+		let month = today.getMonth() + 1
+		const year = today.getFullYear()
+		if (day < 10) day = '0' + day
+		if (month < 10) month = '0' + month
+		return `${year}-${month}-${day}`
+	}
+
 	const [exerciseSelection, setExerciseSelection] = useState('')
+	const [dateSelection, setDateSelection] = useState(dateHelper())
+	const [trackedMetricSelection, setTrackedMetricSelection] = useState('')
+	const [metricSelection, setMetricSelection] = useState('')
 
 	const handleSave = () => {
 		const newRecord = {
-			exercise: document.getElementById('new-exercise').value,
-			date: new Date(`${document.getElementById('new-date').value}T08:00:00.000Z`),
-			trackedMetric: document.getElementById('new-tracking').value,
+			exercise: exerciseSelection,
+			date: dateSelection,
+			trackedMetric: trackedMetricSelection,
+			metricType: metricSelection,
 		}
 		onSave(newRecord)
-	}
-
-	const determineTracking = () => {
-		const chosenIndex = document.getElementById('new-exercise').options.selectedIndex
-		const tracking = document
-			.getElementById('new-exercise')
-			.options[chosenIndex].getAttribute('tracking')
-		if (tracking === 'reps') {
-			return 'How many reps?'
-		} else if (tracking === 'time') {
-			return 'How long (in minutes)?'
-		} else if (tracking === 'distance') {
-			return 'How far (in miles)?'
-		} else if (tracking === 'weight') {
-			return 'How much weight (in pounds)?'
-		}
 	}
 
 	return (
 		<div className='ui form segment' role='rowgroup'>
 			<div className='new-exercise-group'>
-				<div className='ui dropdown align-table-content' role='cell'>
+				<div className='ui dropdown field align-table-content' role='cell'>
 					<label>
 						Exercise
 						<select
@@ -41,48 +39,82 @@ const NewWorkout = ({ onSave }) => {
 						>
 							<option value=''>Exercises</option>
 							{exercises.map(exercise => (
-								<option
-									key={exercise.exercise}
-									value={exercise.exercise}
-									tracking={exercise.trackingType}
-								>
+								<option key={exercise.exercise} value={exercise.exercise}>
 									{exercise.exercise}
 								</option>
 							))}
 						</select>
 					</label>
 				</div>
-				<div className='ui input dropdown align-table-content' role='cell'>
+				<div className='ui input field dropdown align-table-content' role='cell'>
 					<label>
 						Date
 						<input
 							id='new-date'
 							type='date'
-							defaultValue={new Date()
-								.toLocaleDateString('zh', {
-									year: 'numeric',
-									month: '2-digit',
-									day: '2-digit',
-								})
-								.split('/')
-								.join('-')}
+							defaultValue={dateHelper()}
+							onChange={e => setDateSelection(e.target.value)}
 						/>
 					</label>
 				</div>
-				<div className='ui input align-table-content' role='cell'>
-					{exerciseSelection ? (
+				<div className='ui input field block align-table-content' role='cell'>
+					<React.Fragment>
 						<label>
-							{determineTracking()}
-							<input id='new-tracking' type='text' />
+							Reps/Time/Dis/lbs
+							<input
+								id='new-tracking'
+								type='text'
+								placeholder='30'
+								onChange={e => setTrackedMetricSelection(e.target.value)}
+							/>
 						</label>
-					) : (
-						<div className='ui input disabled'>
-							<label>
-								Reps/Time/Dis/lbs
-								<input id='new-tracking' type='text' placeholder='Tracked Metric' />
+						<div>
+							<label className='radio-buttons'>
+								Reps
+								<input
+									name='new-metric'
+									type='radio'
+									tabIndex='0'
+									value='reps'
+									onChange={e => setMetricSelection(e.target.value)}
+								/>
+								<span className='custom-radio'></span>
+							</label>
+							<label className='radio-buttons'>
+								Minutes
+								<input
+									name='new-metric'
+									type='radio'
+									tabIndex='0'
+									value='minutes'
+									onChange={e => setMetricSelection(e.target.value)}
+								/>
+								<span className='custom-radio'></span>
+							</label>
+							<label className='radio-buttons'>
+								Miles
+								<input
+									name='new-metric'
+									type='radio'
+									tabIndex='0'
+									value='miles'
+									onChange={e => setMetricSelection(e.target.value)}
+								/>
+								<span className='custom-radio'></span>
+							</label>
+							<label className='radio-buttons'>
+								lbs
+								<input
+									name='new-metric'
+									type='radio'
+									tabIndex='0'
+									value='pounds'
+									onChange={e => setMetricSelection(e.target.value)}
+								/>
+								<span className='custom-radio'></span>
 							</label>
 						</div>
-					)}
+					</React.Fragment>
 				</div>
 				<div className='align-table-content align-button' role='cell'>
 					<button onClick={handleSave} className='ui right labeled icon blue button'>

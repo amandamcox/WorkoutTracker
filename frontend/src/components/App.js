@@ -1,88 +1,82 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import NewWorkout from './NewWorkout'
-import WorkoutTable from './WorkoutTable'
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
 import workoutService from '../services/workouts'
+import Workouts from './Workouts'
+import Login from './Login'
+import Progress from './Progress'
+import Home from './Home'
+import CreateAccount from './CreateAccount'
 
 const App = () => {
-	const [savedWorkouts, setSavedWorkouts] = useState([])
-
-	const sortDataByDate = data => {
-		return data.sort(function(a, b) {
-			if (Date.parse(a.date) > Date.parse(b.date)) {
-				return -1
-			}
-			if (Date.parse(a.date) < Date.parse(b.date)) {
-				return 1
-			}
-			return 0
-		})
-	}
+	const [user, setUser] = useState(null)
 
 	useEffect(() => {
-		const getInitialLoad = async () => {
-			const req = await axios.get('/api/workouts')
-			const sortedData = sortDataByDate(req.data)
-			setSavedWorkouts(sortedData)
+		const loggedInUser = window.localStorage.getItem('workoutTrackLoggedInUser')
+		if (loggedInUser) {
+			const user = JSON.parse(loggedInUser)
+			setUser(user)
+			workoutService.setToken(user.token)
 		}
-		getInitialLoad()
 	}, [])
 
-	const handleNewRecordSave = async newRecord => {
-		const newSavedWorkout = await workoutService.saveRecord(newRecord)
-		const newSortedWorkouts = sortDataByDate(savedWorkouts.concat(newSavedWorkout))
-		setSavedWorkouts(newSortedWorkouts)
+	const handleUsers = loginData => {
+		setUser(loginData)
 	}
 
-	const handleRecordDelete = async id => {
-		await workoutService.deleteRecord(id)
-		const newSortedWorkouts = sortDataByDate(
-			savedWorkouts.filter(workout => workout._id !== id)
-		)
-		setSavedWorkouts(newSortedWorkouts)
-	}
-
-	const handleRecordEdit = async (id, editObject) => {
-		const newEditedWorkout = await workoutService.updateRecord(id, editObject)
-		const newSortedWorkouts = sortDataByDate(
-			savedWorkouts.map(workout =>
-				workout._id !== newEditedWorkout._id ? workout : newEditedWorkout
-			)
-		)
-		setSavedWorkouts(newSortedWorkouts)
+	const handleLogOut = () => {
+		window.localStorage.removeItem('workoutTrackLoggedInUser')
+		setUser(null)
 	}
 
 	return (
-		<React.Fragment>
-			<div id='navigation' className='ui secondary pointing stackable menu'>
-				<span className='active item'>Add/View Workouts</span>
-				<span className='item'>Track Progress (TBD)</span>
-				<div className='right menu'>
-					<span className='item'>Sign In (TBD)</span>
+		<div>
+			<Router>
+				<div>
+					<div id='navigation' className='ui secondary pointing stackable menu'>
+						<NavLink exact to='/' className='item' activeClassName='active'>
+							Home
+						</NavLink>
+						<NavLink exact to='/workouts' className='item' activeClassName='active'>
+							Add/View Workouts
+						</NavLink>
+						<NavLink exact to='/progress' className='item' activeClassName='active'>
+							Track Progress (TBD)
+						</NavLink>
+						<div className='right menu'>
+							{user ? (
+								<div className='item clickable-icon' onClick={handleLogOut}>
+									Log Out
+								</div>
+							) : (
+								<NavLink
+									exact
+									to='/createaccount'
+									className='item'
+									activeClassName='active'
+								>
+									Sign Up
+								</NavLink>
+							)}
+						</div>
+					</div>
+					<div>
+						<Route exact path='/' render={() => <Home />} />
+						<Route exact path='/workouts' render={() => <Workouts loggedIn={user} />} />
+						<Route exact path='/progress' render={() => <Progress />} />
+						<Route
+							exact
+							path='/login'
+							render={() => <Login userData={handleUsers} />}
+						/>
+						<Route
+							exact
+							path='/createaccount'
+							render={() => <CreateAccount userData={handleUsers} />}
+						/>
+					</div>
 				</div>
-			</div>
-			<div className='ui container'>
-				<h1>Add A Workout</h1>
-				<NewWorkout onSave={handleNewRecordSave} />
-			</div>
-			<div className='gray-container'>
-				<div className='ui container'>
-					{savedWorkouts.length > 0 ? (
-						<React.Fragment>
-							<h1>Your Workout History</h1>
-							<WorkoutTable
-								workoutData={savedWorkouts}
-								onSave={handleNewRecordSave}
-								onDelete={handleRecordDelete}
-								onEdit={handleRecordEdit}
-							></WorkoutTable>
-						</React.Fragment>
-					) : (
-						<h1>No Saved Workouts</h1>
-					)}
-				</div>
-			</div>
-		</React.Fragment>
+			</Router>
+		</div>
 	)
 }
 

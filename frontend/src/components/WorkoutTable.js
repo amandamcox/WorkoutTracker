@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import EditableInput from './EditableInput'
-import exercises from '../statics/exerciseDataSet'
 
 const WorkoutTable = ({ workoutData, onDelete, onEdit }) => {
 	const [editedValue, setEditedValue] = useState('')
@@ -21,15 +20,14 @@ const WorkoutTable = ({ workoutData, onDelete, onEdit }) => {
 		}
 	}
 
-	const getExerciseMetric = savedObject => {
-		const exerciseObj = exercises.find(exercise => savedObject.exercise === exercise.exercise)
-		if (exerciseObj.trackingType === 'reps') {
+	const shortenMetricString = metric => {
+		if (metric === 'reps') {
 			return 'reps'
-		} else if (exerciseObj.trackingType === 'time') {
+		} else if (metric === 'minutes') {
 			return 'min'
-		} else if (exerciseObj.trackingType === 'distance') {
+		} else if (metric === 'miles') {
 			return 'miles'
-		} else if (exerciseObj.trackingType === 'weight') {
+		} else if (metric === 'pounds') {
 			return 'lbs'
 		}
 	}
@@ -39,8 +37,8 @@ const WorkoutTable = ({ workoutData, onDelete, onEdit }) => {
 			<div className='table-header table-group' role='rowgroup'>
 				<div role='columnheader'>Workout Type</div>
 				<div role='columnheader'>Date</div>
-				<div role='columnheader'>Tracking Metric</div>
-				<div role='columnheader'>Actions</div>
+				<div role='columnheader'>Tracked Metric</div>
+				<div role='columnheader'>Remove</div>
 			</div>
 			{workoutData.map(row => (
 				<div className='table-group' role='rowgroup' key={row._id}>
@@ -48,23 +46,20 @@ const WorkoutTable = ({ workoutData, onDelete, onEdit }) => {
 						<span>{row.exercise}</span>
 					</div>
 					<div className='ui input' role='cell'>
-						<EditableInput
-							text={new Date(row.date).toLocaleDateString()}
-							childSave={handleEdit}
-						>
+						<EditableInput text={row.date} childSave={handleEdit}>
 							<input
 								id={row._id}
 								type='date'
 								name='date'
 								className='edit-inputs'
-								placeholder={new Date(row.date).toLocaleDateString()}
+								defaultValue={row.date}
 								onChange={e => setEditedValue(e.target.value)}
 							/>
 						</EditableInput>
 					</div>
 					<div className='ui input' role='cell'>
 						<EditableInput
-							text={`${row.trackedMetric} ${getExerciseMetric(row)}`}
+							text={`${row.trackedMetric} ${shortenMetricString(row.metricType)}`}
 							childSave={handleEdit}
 						>
 							<input

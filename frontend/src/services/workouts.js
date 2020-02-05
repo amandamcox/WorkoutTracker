@@ -1,14 +1,24 @@
 import axios from 'axios'
 
-const apiBase = '/api/workouts'
+const apiBase = 'http://localhost:3001/api/workouts'
+
+let token = null
+
+const setToken = newToken => (token = `bearer ${newToken}`)
 
 const getAll = async () => {
-	const req = await axios.get(apiBase)
+	const headers = {
+		headers: { Authorization: token },
+	}
+	const req = await axios.get(apiBase, headers)
 	return req.data
 }
 
 const saveRecord = async newObject => {
-	const req = await axios.post(apiBase, newObject)
+	const headers = {
+		headers: { Authorization: token },
+	}
+	const req = await axios.post(apiBase, newObject, headers)
 	return req.data
 }
 
@@ -22,4 +32,4 @@ const deleteRecord = async id => {
 	return req.data
 }
 
-export default { getAll, saveRecord, updateRecord, deleteRecord }
+export default { getAll, saveRecord, updateRecord, deleteRecord, setToken }
