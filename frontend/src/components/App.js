@@ -40,7 +40,7 @@ const App = () => {
 							Add/View Workouts
 						</NavLink>
 						<NavLink exact to='/progress' className='item' activeClassName='active'>
-							Track Progress (TBD)
+							Track Progress
 						</NavLink>
 						<div className='right menu'>
 							{user ? (

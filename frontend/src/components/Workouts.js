@@ -22,10 +22,6 @@ const Workouts = ({ loggedIn }) => {
 		if (loggedIn) {
 			const getInitialLoad = async () => {
 				const req = await workoutService.getAll()
-				req.filter(workout => console.log(workout.userId.username))
-				// const filteredWorkouts = req.filter(
-				// 	workout => loggedIn.username === workout.username
-				// )
 				const sortedData = sortDataByDate(req)
 				setSavedWorkouts(sortedData)
 			}

@@ -9,7 +9,6 @@ This is a work in progress with future features noted with "TBD"
 
 ### To Do
 
--   Add progress tracking
 -   Add error handling
 -   Add form validation
--   Fill in site contents
+-   Fill in site contents & prettify the UI

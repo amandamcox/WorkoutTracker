@@ -181,3 +181,25 @@ html {
 .info-message {
 	background-color: #e6e6e6 !important;
 }
+
+.graph-drop-down {
+	position: relative;
+	display: block;
+	font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+	font-size: 16px;
+	color: #60666d;
+	padding: 10px;
+	border-radius: 5px;
+	margin-left: 20px;
+}
+
+.graph-style {
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	margin: 20px;
+	padding: 20px;
+}
+
+.bottom-margin {
+	margin-bottom: 2.5em;
+}
