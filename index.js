@@ -1,4 +1,4 @@
-const app = require('./api/server')
+const app = require('./server')
 const http = require('http')
 const mongoose = require('mongoose')
 const { PORT, MONGODB_URI } = require('./config/config')
@@ -15,4 +15,4 @@ mongoose
 		useFindAndModify: false,
 	})
 	.then(() => logger.info('Connected to MongoDB'))
-	.catch(error => logger.error('Error connecting to MongoDB:', error.message))
+	.catch((error) => logger.error('Error connecting to MongoDB:', error.message))
