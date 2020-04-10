@@ -1,1 +1,10 @@
+node_modules
+test.rest
 .vscode
+jest.config.js
+.env
+Procfile
+services/
+api/components/exercises/tests
+api/components/user/tests
+api/components/userWorkouts/tests
