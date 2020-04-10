@@ -3,7 +3,6 @@ test.rest
 .vscode
 jest.config.js
 .env
-Procfile
 services/
 api/components/exercises/tests
 api/components/user/tests
