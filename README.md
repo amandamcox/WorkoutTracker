@@ -9,6 +9,6 @@ This is a work in progress with future features noted with "TBD"
 
 ### To Do
 
--   Add error handling
+-   Add front-end error handling
+-   Add Unit tests for backend and frontend
 -   Add form validation
--   Fill in site contents & prettify the UI

@@ -1,0 +1,8 @@
+.progress-container {
+	width: 100%;
+	padding: 5%;
+}
+.progress-container h1 {
+	font-size: 1.6em;
+	color: #0c2b5b;
+}

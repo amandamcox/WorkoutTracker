@@ -1,0 +1,136 @@
+.user-workout-container {
+	width: 100%;
+	padding: 5%;
+}
+.user-workout-container h1 {
+	font-size: 1.6em;
+	color: #0c2b5b;
+}
+.add-button {
+	border: 0;
+	border-radius: 20px;
+	background-color: #aeebdc;
+	color: #0c2b5b;
+	font-weight: 700;
+	padding: 10px 20px;
+	margin: 25px 0px;
+	font-family: 'Roboto', sans-serif;
+	width: 100%;
+	outline: none;
+}
+.add-button i {
+	padding-right: 10px;
+}
+.table-container {
+	border: 1px solid #767676;
+	border-radius: 15px;
+	padding: 10px 10px;
+	font-size: 14px;
+	background-color: #f7f7f7;
+}
+.table-container .column-header {
+	display: none;
+}
+.table-row {
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid #0c2b5b;
+	padding: 15px 0px;
+}
+.table-container i {
+	margin: 10px 30px 0px 5px;
+}
+.table-cell:not(.column-header) {
+	padding: 5px 10px;
+	width: 100%;
+}
+.red-icon {
+	color: #d8272e;
+}
+.blue-icon {
+	color: #0c2b5b;
+}
+.table-cell input:not([name='new-metric']),
+.table-cell select {
+	border-radius: 5px;
+	border: 1px solid #0c2b5b;
+	padding: 10px 15px;
+	margin: 5px 0px;
+	color: #767676;
+	outline: none;
+	width: 100%;
+}
+
+.table-cell input:not([name='new-metric']):focus,
+.table-cell select:focus {
+	border: 1px solid #aeebdc;
+	border-radius: 5px;
+	outline: none;
+}
+.metric-radios {
+	display: inline-block;
+}
+.metric-radios label {
+	padding: 0px 5px;
+	font-size: 12px;
+}
+.save-button {
+	border: 0;
+	border-radius: 20px;
+	background-color: #0c2b5b;
+	color: #aeebdc;
+	font-weight: 700;
+	padding: 10px 20px;
+	font-family: 'Roboto', sans-serif;
+	margin-top: 10px;
+}
+
+@media all and (max-width: 600px) {
+	.table-row div:before {
+		font-weight: 700;
+		color: #0c2b5b;
+	}
+
+	.table-row div:nth-of-type(1):before {
+		content: 'Exercise: ';
+	}
+	.table-row div:nth-of-type(2):before {
+		content: 'Date: ';
+	}
+	.table-row div:nth-of-type(3):before {
+		content: 'Metric Tracked: ';
+	}
+}
+
+@media all and (min-width: 600px) {
+	.user-workout-container {
+		padding: 8%;
+	}
+	.add-button {
+		width: auto;
+	}
+	.table-container {
+		padding: 15px 25px;
+		font-size: 14px;
+	}
+	.table-container .column-header {
+		display: inherit;
+		font-weight: 700;
+		color: #0c2b5b;
+	}
+	.table-row {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(25%, 1fr)) 10%;
+		justify-content: stretch;
+	}
+	.table-container i {
+		margin: 0px 5px;
+	}
+	.table-cell {
+		padding: 5px 10px;
+	}
+	.save-button {
+		padding: 10px 20px;
+		margin: auto;
+	}
+}
