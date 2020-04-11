@@ -30,6 +30,10 @@ const trackerReducer = (
 				errorMessage: null,
 				exercises: action.payload,
 			})
+		case 'ADD_NEW_EXERCISE':
+			return Object.assign({}, state, {
+				exercises: [...state.exercises, action.payload],
+			})
 		case 'ADD_NEW_WORKOUT':
 			return Object.assign({}, state, {
 				isFetching: false,

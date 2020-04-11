@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const getUserWorkouts = async token => {
+const getUserWorkouts = async (token) => {
 	try {
 		const headers = {
 			headers: { Authorization: `bearer ${token}` },
@@ -33,7 +33,7 @@ const updateUserWorkout = async (id, userWorkoutObj) => {
 	}
 }
 
-const deleteUserWorkout = async id => {
+const deleteUserWorkout = async (id) => {
 	try {
 		const res = await axios.delete(`/api/userWorkouts/${id}`)
 		return res.data
@@ -51,10 +51,21 @@ const getExercises = async () => {
 	}
 }
 
+const addExercise = async (exercise) => {
+	const exerciseObj = { name: exercise }
+	try {
+		const res = await axios.post('/api/exercises', exerciseObj)
+		return res.data
+	} catch (error) {
+		throw Error(error)
+	}
+}
+
 export default {
 	getUserWorkouts,
 	saveUserWorkout,
 	updateUserWorkout,
 	deleteUserWorkout,
 	getExercises,
+	addExercise,
 }

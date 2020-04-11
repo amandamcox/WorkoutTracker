@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Tracker from '../tracker/Tracker'
+import Tracker from '../tracker/Tracker/Tracker'
 import Progress from '../progress/Progress'
 import Home from './Home/Home'
 import CreateAccount from '../auth/CreateAccount'

@@ -55,6 +55,10 @@ a:hover {
 .font-white {
 	color: #ffffff;
 }
+.error-message {
+	color: #d8272e;
+	font-style: italic;
+}
 
 /* App Component Styling */
 nav {

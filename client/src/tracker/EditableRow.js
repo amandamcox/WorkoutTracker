@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { trySaveUserWorkout, tryEditUserWorkout, setAdding, setEditing } from './actions'
 import { dateHelper } from './helpers'
+import AddExerciseModal from './AddNewExerciseModal/AddExerciseModal'
 
 const EditableRow = ({ workoutObject }) => {
 	const [exercise, setExercise] = useState('')
 	const [date, setDate] = useState(dateHelper())
 	const [trackedMetric, setTrackedMetric] = useState('')
 	const [metricType, setMetricType] = useState('')
+	const [showModal, setShowModal] = useState(false)
 
 	const exerciseList = useSelector((state) => state.tracker.exercises)
 	const editedWorkout = useSelector((state) => state.tracker.editingWorkout)
@@ -68,6 +70,8 @@ const EditableRow = ({ workoutObject }) => {
 		setMetricType('')
 	}
 
+	const onModalClose = () => setShowModal(false)
+
 	return (
 		<div className='table-row'>
 			<div className='table-cell'>
@@ -85,6 +89,14 @@ const EditableRow = ({ workoutObject }) => {
 						</option>
 					))}
 				</select>
+				<p>
+					<button
+						onClick={() => setShowModal(true)}
+						className=' button new-button clickable'
+					>
+						Add New Exercise
+					</button>
+				</p>
 			</div>
 			<div className='table-cell'>
 				<input
@@ -123,11 +135,12 @@ const EditableRow = ({ workoutObject }) => {
 			<div className='table-cell'>
 				<button
 					onClick={workoutObject ? handleEdit : handleSave}
-					className='save-button clickable'
+					className='button save-button clickable'
 				>
 					Save
 				</button>
 			</div>
+			{showModal && <AddExerciseModal onClose={onModalClose} />}
 		</div>
 	)
 }

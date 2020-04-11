@@ -65,7 +65,6 @@
 .table-cell select:focus {
 	border: 1px solid #aeebdc;
 	border-radius: 5px;
-	outline: none;
 }
 .metric-radios {
 	display: inline-block;
@@ -74,30 +73,38 @@
 	padding: 0px 5px;
 	font-size: 12px;
 }
-.save-button {
+.button {
 	border: 0;
 	border-radius: 20px;
-	background-color: #0c2b5b;
-	color: #aeebdc;
-	font-weight: 700;
 	padding: 10px 20px;
 	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+}
+.save-button {
+	background-color: #0c2b5b;
+	color: #aeebdc;
 	margin-top: 10px;
 }
 
+.new-button {
+	background-color: #0c2b5b;
+	color: #aeebdc;
+	letter-spacing: 0.5px;
+}
+
 @media all and (max-width: 600px) {
-	.table-row div:before {
+	.table-row .table-cell:before {
 		font-weight: 700;
 		color: #0c2b5b;
 	}
 
-	.table-row div:nth-of-type(1):before {
+	.table-row .table-cell:nth-of-type(1):before {
 		content: 'Exercise: ';
 	}
-	.table-row div:nth-of-type(2):before {
+	.table-row .table-cell:nth-of-type(2):before {
 		content: 'Date: ';
 	}
-	.table-row div:nth-of-type(3):before {
+	.table-row .table-cell:nth-of-type(3):before {
 		content: 'Metric Tracked: ';
 	}
 }

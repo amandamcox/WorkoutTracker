@@ -45,6 +45,13 @@ const receiveExercises = (exercises) => {
 	}
 }
 
+const addExercise = (newExercise) => {
+	return {
+		type: 'ADD_NEW_EXERCISE',
+		payload: newExercise,
+	}
+}
+
 export const tryGetUserWorkouts = (userToken) => {
 	return async (dispatch) => {
 		dispatch(requestServer())
@@ -99,6 +106,18 @@ export const tryDeleteUserWorkout = (userWorkoutId) => {
 		try {
 			await trackerService.deleteUserWorkout(userWorkoutId)
 			return dispatch(deleteWorkout(userWorkoutId))
+		} catch (error) {
+			dispatch(receiveError(error))
+		}
+	}
+}
+
+export const tryAddNewExercise = (exercise) => {
+	return async (dispatch) => {
+		dispatch(requestServer())
+		try {
+			const res = await trackerService.addExercise(exercise)
+			return dispatch(addExercise(res))
 		} catch (error) {
 			dispatch(receiveError(error))
 		}

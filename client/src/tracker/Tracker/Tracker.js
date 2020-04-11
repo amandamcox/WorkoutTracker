@@ -6,10 +6,10 @@ import {
 	tryDeleteUserWorkout,
 	setAdding,
 	setEditing,
-} from './actions'
-import EditableRow from './EditableRow'
+} from '../actions'
+import EditableRow from '../EditableRow'
 import './tracker.css'
-import { sortWorkoutsByDate } from './helpers'
+import { sortWorkoutsByDate } from '../helpers'
 
 const Tracker = () => {
 	const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
