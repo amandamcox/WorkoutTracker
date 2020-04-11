@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { tryAddNewExercise } from '../actions'
+import { setAddingExercise, tryAddNewExercise } from '../actions'
 import './addexercisemodal.css'
 
-const AddExerciseModal = ({ onClose }) => {
+const AddExerciseModal = () => {
 	const [newExercise, setNewExercise] = useState('')
+	const [validationError, setValidationError] = useState('')
 
-	const hasError = useSelector((state) => state.tracker.error)
+	const exerciseList = useSelector((state) => state.tracker.exercises)
 	const dispatch = useDispatch()
 
-	const handleSubmit = async () => {
+	const handleSave = () => {
+		const duplicates = exerciseList.filter((exercise) => exercise.name === newExercise)
+		if (duplicates.length > 0) {
+			return setValidationError(
+				`${newExercise} already exists in exercise list. Please try another exercise.`
+			)
+		}
 		dispatch(tryAddNewExercise(newExercise))
-		onClose()
 	}
 
 	return (
 		<div>
-			<div className='modal-overlay' onClick={onClose}></div>
+			<div className='modal-overlay' onClick={() => dispatch(setAddingExercise(false))}></div>
 			<div className='modal'>
-				<button className='close-button' onClick={onClose}>
+				<button
+					className='close-button clickable'
+					onClick={() => dispatch(setAddingExercise(false))}
+				>
 					<i className='fas fa-times'></i>
 				</button>
 				<div className='modal-content'>
@@ -32,12 +41,8 @@ const AddExerciseModal = ({ onClose }) => {
 						value={newExercise}
 						onChange={(e) => setNewExercise(e.target.value)}
 					/>
-					{hasError && (
-						<p className='error-message'>
-							Exercise is either not unique or addition failed. Please try again.
-						</p>
-					)}
-					<button onClick={handleSubmit} className='button save-button clickable'>
+					{validationError && <p className='error-message'>{validationError}</p>}
+					<button onClick={handleSave} className='button save-button clickable'>
 						Add
 					</button>
 				</div>

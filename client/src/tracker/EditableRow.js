@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { trySaveUserWorkout, tryEditUserWorkout, setAdding, setEditing } from './actions'
+import {
+	trySaveUserWorkout,
+	tryEditUserWorkout,
+	setAdding,
+	setEditing,
+	setAddingExercise,
+} from './actions'
 import { dateHelper } from './helpers'
 import AddExerciseModal from './AddNewExerciseModal/AddExerciseModal'
 
@@ -9,10 +15,10 @@ const EditableRow = ({ workoutObject }) => {
 	const [date, setDate] = useState(dateHelper())
 	const [trackedMetric, setTrackedMetric] = useState('')
 	const [metricType, setMetricType] = useState('')
-	const [showModal, setShowModal] = useState(false)
 
 	const exerciseList = useSelector((state) => state.tracker.exercises)
 	const editedWorkout = useSelector((state) => state.tracker.editingWorkout)
+	const showModal = useSelector((state) => state.tracker.isAddingExercise)
 	const dispatch = useDispatch()
 	const userToken = JSON.parse(window.localStorage.getItem('workoutTracker')).token
 
@@ -70,8 +76,6 @@ const EditableRow = ({ workoutObject }) => {
 		setMetricType('')
 	}
 
-	const onModalClose = () => setShowModal(false)
-
 	return (
 		<div className='table-row'>
 			<div className='table-cell'>
@@ -91,7 +95,7 @@ const EditableRow = ({ workoutObject }) => {
 				</select>
 				<p>
 					<button
-						onClick={() => setShowModal(true)}
+						onClick={() => dispatch(setAddingExercise(true))}
 						className=' button new-button clickable'
 					>
 						Add New Exercise
@@ -140,7 +144,7 @@ const EditableRow = ({ workoutObject }) => {
 					Save
 				</button>
 			</div>
-			{showModal && <AddExerciseModal onClose={onModalClose} />}
+			{showModal && <AddExerciseModal />}
 		</div>
 	)
 }

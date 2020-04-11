@@ -145,3 +145,10 @@ export const setAdding = (status) => {
 		status,
 	}
 }
+
+export const setAddingExercise = (status) => {
+	return {
+		type: 'SET_ADDING_EXERCISE_STATUS',
+		status,
+	}
+}

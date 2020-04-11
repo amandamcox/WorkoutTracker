@@ -7,6 +7,7 @@ const trackerReducer = (
 		exercises: [],
 		isEditingTracker: false,
 		isAddingTracker: false,
+		isAddingExercise: false,
 	},
 	action
 ) => {
@@ -32,7 +33,11 @@ const trackerReducer = (
 			})
 		case 'ADD_NEW_EXERCISE':
 			return Object.assign({}, state, {
+				isFetching: false,
+				error: false,
+				errorMessage: null,
 				exercises: [...state.exercises, action.payload],
+				isAddingExercise: false,
 			})
 		case 'ADD_NEW_WORKOUT':
 			return Object.assign({}, state, {
@@ -76,6 +81,10 @@ const trackerReducer = (
 		case 'SET_TRACKER_ADDING_STATUS':
 			return Object.assign({}, state, {
 				isAddingTracker: action.status,
+			})
+		case 'SET_ADDING_EXERCISE_STATUS':
+			return Object.assign({}, state, {
+				isAddingExercise: action.status,
 			})
 		default:
 			return state
