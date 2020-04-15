@@ -4,6 +4,7 @@ const trackerReducer = (
 		error: false,
 		errorMessage: null,
 		userWorkouts: [],
+		uniqueUserExercises: [],
 		exercises: [],
 		isEditingTracker: false,
 		isAddingTracker: false,
@@ -22,6 +23,7 @@ const trackerReducer = (
 				error: false,
 				errorMessage: null,
 				userWorkouts: action.payload,
+				uniqueUserExercises: action.uniqueExercises,
 				lastUpdated: action.receivedAt,
 			})
 		case 'RECEIVE_EXERCISE_LIST':
@@ -45,6 +47,7 @@ const trackerReducer = (
 				error: false,
 				errorMessage: null,
 				userWorkouts: [...state.userWorkouts, action.payload],
+				uniqueUserExercises: [...new Set([...state.uniqueUserExercises, action.payload.exercise])],
 				lastUpdated: action.receivedAt,
 			})
 		case 'UPDATE_EDITED_WORKOUT':
@@ -55,6 +58,7 @@ const trackerReducer = (
 				userWorkouts: state.userWorkouts
 					.filter((workout) => workout._id !== action.payload._id)
 					.concat(action.payload),
+				uniqueUserExercises: [...new Set([...state.uniqueUserExercises, action.payload.exercise])],
 				lastUpdated: action.receivedAt,
 			})
 		case 'DELETE_WORKOUT':

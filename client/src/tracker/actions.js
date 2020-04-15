@@ -6,10 +6,12 @@ const requestServer = () => {
 	}
 }
 
-const receiveWorkoutServerRes = (savedWorkouts) => {
+const receiveWorkoutServerRes = ({ workouts }) => {
+	const uniqueExercises = [...new Set(workouts.map(workout => workout.exercise))]
 	return {
 		type: 'RECEIVE_WORKOUTS',
-		payload: savedWorkouts.workouts,
+		payload: workouts,
+		uniqueExercises,
 		receivedAt: Date.now(),
 	}
 }

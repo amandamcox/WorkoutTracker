@@ -22,7 +22,10 @@ const Tracker = () => {
 	const userToken = JSON.parse(window.localStorage.getItem('workoutTracker')).token
 
 	useEffect(() => {
-		if (isLoggedIn) {
+		if (isLoggedIn && userWorkouts.length > 0) {
+			dispatch(tryGetExercises())
+		}
+		else if (isLoggedIn && userWorkouts.length === 0) {
 			dispatch(tryGetUserWorkouts(userToken))
 			dispatch(tryGetExercises())
 		}

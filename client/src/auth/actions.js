@@ -1,4 +1,5 @@
 import authService from './service'
+import { tryGetUserWorkouts } from '../tracker/actions'
 
 const requestLogin = () => {
 	return {
@@ -19,6 +20,9 @@ export const tryLogin = credentials => {
 		dispatch(requestLogin())
 		try {
 			const res = await authService.login(credentials)
+			if (res) {
+				dispatch(tryGetUserWorkouts(res.token))
+			}
 			return dispatch(receiveLogin(res))
 		} catch (error) {
 			dispatch(receiveError(error))
