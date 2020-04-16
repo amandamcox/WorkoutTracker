@@ -61,6 +61,10 @@
 	width: 100%;
 }
 
+.table-cell select {
+	-webkit-appearance: none;
+}
+
 .table-cell input:not([name='new-metric']):focus,
 .table-cell select:focus {
 	border: 1px solid #aeebdc;
